@@ -37,3 +37,9 @@
         dest: /home/jstanley/.ssh/authorized_keys
         mode: 0644
         owner: jstanley
+    - name: add to sudoers
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        line: "jstanley ALL=(ALL) NOPASSWD: ALL"
+        validate: "/usr/bin/visudo -cf %s"
