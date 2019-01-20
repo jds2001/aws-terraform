@@ -1,0 +1,39 @@
+- name: update and install packages
+  hosts: all
+  become: yes
+  tasks:
+    - name: update all packages
+      yum:
+        name: "*"
+        state: latest
+    - name: install repos
+      yum:
+        name:
+          - centos-release-scl
+          - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - name: install packages
+      yum:
+        name:
+          - bash-completion
+          - rh-python36
+          - vim-enhanced
+          - cowsay
+          - sl
+    - name: add user
+      user:
+        name: jstanley
+        comment: Jon Stanley
+        group: wheel
+        create_home: yes
+    - name: create ssh directory in homedir
+      file:
+        path: /home/jstanley/.ssh
+        mode: 0700
+        owner: jstanley
+        state: directory
+    - name: copy authorized_keys file
+      copy:
+        src: authorized_keys
+        dest: /home/jstanley/.ssh/authorized_keys
+        mode: 0644
+        owner: jstanley

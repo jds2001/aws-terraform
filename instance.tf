@@ -16,6 +16,16 @@ resource "aws_instance" "web" {
    key_name = "${aws_key_pair.main.key_name}"
    ami = "${data.aws_ami.centos.id}"
    instance_type = "t2.micro"
+   provisioner "remote-exec" {
+      connection {
+         type = "ssh"
+         user = "centos"
+      }
+      inline = [ "echo hello world" ]
+   }
+   provisioner "local-exec" {
+      command = "ansible-playbook --ssh-common-args='-o StrictHostKeyChecking=no' -u centos -i ${self.public_ip}, update.yml"
+   }
 }
 
 output "public_ip" {
