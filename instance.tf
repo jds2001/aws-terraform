@@ -16,6 +16,11 @@ resource "aws_instance" "web" {
    key_name = "${aws_key_pair.main.key_name}"
    ami = "${data.aws_ami.centos.id}"
    instance_type = "t2.micro"
+   root_block_device {
+      delete_on_termination = true
+      volume_size = 8
+      volume_type = "gp2"
+   }
    provisioner "remote-exec" {
       connection {
          type = "ssh"
