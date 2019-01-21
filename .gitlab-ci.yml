@@ -1,4 +1,4 @@
 job1:
   script:
-    - ls /
-    - ls /cache
+    - pwd
+    - ls
