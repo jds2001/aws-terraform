@@ -1,8 +1,4 @@
 job1:
+  image: hashicorp/terraform:light
   script:
-    - "echo hello world"
-    - "echo hello2 world"
-job2:
-  script:
-    - "echo hello from job2"
-    - "exit 1"
+    - plan
