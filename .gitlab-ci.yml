@@ -2,3 +2,4 @@ job1:
   script:
     - pwd
     - ls
+    - sleep 700
