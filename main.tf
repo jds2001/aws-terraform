@@ -5,13 +5,13 @@ provider "aws" {
 }
 
 resource "aws_vpc" "main" {
-   cidr_block = "172.17.0.0/16"
+   cidr_block = "172.18.0.0/16"
    enable_dns_hostnames = "true"
 }
 
 resource "aws_subnet" "public_subnet" {
    vpc_id = "${aws_vpc.main.id}"
-   cidr_block = "172.17.0.0/24"
+   cidr_block = "172.18.0.0/24"
    map_public_ip_on_launch = "true"
 }
 
@@ -28,7 +28,7 @@ resource "aws_route" "internet" {
 resource "aws_default_security_group" "default" {
    vpc_id = "${aws_vpc.main.id}"
    ingress {
-      cidr_blocks = ["96.126.108.98/32", "66.175.210.226/32"]
+      cidr_blocks = ["100.35.225.98/32", "96.126.108.98/32", "66.175.210.226/32"]
       from_port = 22
       to_port = 22
       protocol = "tcp"
