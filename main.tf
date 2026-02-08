@@ -1,20 +1,31 @@
+terraform {
+  required_version = ">= 1.0.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.0"
+    }
+  }
+}
+
 provider "aws" {
-   access_key = "${var.aws_access_key}"
-   secret_key = "${var.aws_secret_key}"
-   region = "us-east-1"
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  region     = "us-east-1"
 }
 
 module "network" {
-	source = "./modules/network"
+  source = "./modules/network"
 }
 
 module "ci_server" {
-	source = "./modules/instance"
+  source = "./modules/instance"
 
-	ssh_public_key = "${var.ssh_public_key}"
-	subnet_id = "${module.network.subnet_id}"
+  ssh_public_key = var.ssh_public_key
+  subnet_id      = module.network.subnet_id
 }
 
 output "ci_public_ip" {
-	value = "${module.ci_server.public_ip}"
+  value = module.ci_server.public_ip
 }
